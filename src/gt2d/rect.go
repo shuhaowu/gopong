@@ -1,7 +1,6 @@
 package gt2d
 
 import (
-	"image/draw"
 	"image/color"
 )
 
@@ -92,10 +91,10 @@ func (r Rectangle) Union(s Rectangle) Rectangle {
 
 // Draws a rectangle onto an image. img will be modified.
 // The rectangle will be clipped if it lands outside the image.
-func DrawRectangle(img draw.Image, rectangle *Rectangle, color color.Color) {
+func DrawRectangle(buffer *ScreenBuffer, rectangle *Rectangle, color color.Color) {
 	for x := rectangle.Min.X; x < rectangle.Max.X; x++ {
 		for y := rectangle.Min.Y; y < rectangle.Max.Y; y++ {
-			img.Set(x, y, color)
+			buffer.Set(x, y, color)
 		}
 	}
 }

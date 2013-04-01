@@ -5,17 +5,11 @@ import (
 	"github.com/skelterjohn/go.wde"
 	"image/color"
 	"gt2d"
+	"image"
 )
 
 var game Game
-
-func resetScreen(screen wde.Image, width int, height int) {
-	for x := 0; x < width; x++ {
-		for y := 0; y < height; y++ {
-			screen.Set(x, y, color.Black)
-		}
-	}
-}
+var buffer *gt2d.ScreenBuffer
 
 // Setup code.
 func setup(window wde.Window, done chan bool) {
@@ -24,9 +18,13 @@ func setup(window wde.Window, done chan bool) {
 	window.Show()
 
 	width, height := window.Size()
+	game = InitializeGame(width, height)
+	background := image.NewRGBA(image.Rect(0, 0, width, height))
+	buffer = gt2d.NewScreenBuffer(width, height, background)
+
 	screen := window.Screen()
 
-	resetScreen(screen, width, height)
+	screen.CopyRGBA(buffer.RGBA, buffer.Rect)
 	window.FlushImage()
 
 	events := window.EventChan()
@@ -42,16 +40,15 @@ func setup(window wde.Window, done chan bool) {
 
 		done <- true
 	}()
-
-	game = InitializeGame(width, height)
 }
 
 
 
 func update(window wde.Window, screen wde.Image) bool {
-	resetScreen(screen, game.Width, game.Height)
+	buffer.Reset()
 	game.Update()
-	gt2d.DrawRectangle(screen, &(game.Rectangle), color.White)
+	gt2d.DrawRectangle(buffer, &(game.Rectangle), color.White)
+	screen.SetRGBA(buffer.RGBA)
 	return true
 }
 

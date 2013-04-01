@@ -33,7 +33,6 @@ func runGame() {
 		var i uint
 		var currentTime int64
 		var lastTime int64
-		var fps float32
 		var totalFrames uint
 
 		lastTime = time.Now().UnixNano()
@@ -41,11 +40,10 @@ func runGame() {
 		for i = 0; ; i++ {
 			currentTime = time.Now().UnixNano()
 			if currentTime-lastTime > 1000000000 {
-				fps = float32(i) / (float32(currentTime-lastTime) / 1000000000)
 				lastTime = currentTime
 				totalFrames += i
+				fmt.Println("FPS:", i)
 				i = 0
-				fmt.Println("FPS:", fps)
 			}
 
 			if !update(window, window.Screen()) {
@@ -57,7 +55,7 @@ func runGame() {
 			select {
 			case <-done:
 				break loop
-			case <-time.After(time.Duration(33 * time.Millisecond)):
+			case <-time.After(time.Duration(20 * time.Millisecond)):
 				continue
 			}
 		}
