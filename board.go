@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gt2d"
+	"github.com/shuhaowu/gopong/gt2d"
 )
 
 type Board struct {
