@@ -49,7 +49,7 @@ func (rectangle *Rectangle) In(o *Rectangle) bool {
 }
 
 func (rectangle *Rectangle) Collide(s *Rectangle) bool {
-	return (rectangle.Max.Y > s.Min.Y && rectangle.Max.X > s.Min.X) || s.Collide(rectangle)
+	return !(rectangle.Min.X > s.Max.X || rectangle.Max.X < s.Min.X || rectangle.Min.Y > s.Max.Y || rectangle.Max.Y < s.Min.Y)
 }
 
 // Intersect returns the largest rectangle contained by both r and s. If the

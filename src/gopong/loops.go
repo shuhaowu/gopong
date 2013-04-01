@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/skelterjohn/go.wde"
-	"image/color"
 	"gt2d"
 	"image"
+	"image/color"
+	"time"
 )
 
 var game Game
@@ -44,17 +45,24 @@ func setup(window wde.Window, done chan bool) {
 
 		done <- true
 	}()
+
+	time.Sleep(time.Second / 2)
 }
 
 func update(window wde.Window, screen wde.Image) bool {
 	buffer.Reset()
 	game.Update()
+
+	// could probably use an update list.. but eh
 	gt2d.DrawRectangle(buffer, game.Board1.Rect, color.White)
 	gt2d.DrawRectangle(buffer, game.Board2.Rect, color.White)
+	gt2d.DrawRectangle(buffer, game.Bul.Rect, color.White) // It's actually BGRA
 	screen.SetRGBA(buffer.RGBA)
-	return true
+
+	return game.Running
 }
 
 func cleanup() {
 	fmt.Println("Cleanup")
+	time.Sleep(time.Second * 1)
 }

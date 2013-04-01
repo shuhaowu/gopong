@@ -55,7 +55,7 @@ func runGame() {
 			select {
 			case <-done:
 				break loop
-			case <-time.After(time.Duration(33 * time.Millisecond)):
+			case <-time.After(time.Duration(30 * time.Millisecond)):
 				continue
 			}
 		}
