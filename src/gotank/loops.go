@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/skelterjohn/go.wde"
 	"image/color"
+	"gt2d"
 )
 
 var game Game
@@ -50,7 +51,7 @@ func setup(window wde.Window, done chan bool) {
 func update(window wde.Window, screen wde.Image) bool {
 	resetScreen(screen, game.Width, game.Height)
 	game.Update()
-	DrawRectangle(screen, &(game.Rectangle), color.White)
+	gt2d.DrawRectangle(screen, &(game.Rectangle), color.White)
 	return true
 }
 

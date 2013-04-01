@@ -3,3 +3,4 @@ pkg/
 src/*.com
 activatego
 *.komodoproject
+src/gotank/gotank
