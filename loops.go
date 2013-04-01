@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/skelterjohn/go.wde"
 	"image/color"
-	"gt2d"
+	"github.com/shuhaowu/gopong/gt2d"
 	"image"
 )
 

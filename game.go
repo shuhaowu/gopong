@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/skelterjohn/go.wde"
-	"gt2d"
+	"github.com/shuhaowu/gopong/gt2d"
 )
 
 type Game struct {
