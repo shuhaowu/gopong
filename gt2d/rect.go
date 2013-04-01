@@ -1,6 +1,7 @@
 package gt2d
 
 import (
+	"image"
 	"image/color"
 )
 
@@ -11,6 +12,10 @@ type Rectangle struct {
 var NullRect Rectangle
 
 // TODO: Add a way to fix the points.
+
+func (r *Rectangle) Rectangle() image.Rectangle {
+    return image.Rect(r.Min.X, r.Min.Y, r.Max.X, r.Max.Y)
+}
 
 func Rect(x1, y1, x2, y2 int) *Rectangle{
 	return &(Rectangle{Vector2D{x1, y1}, Vector2D{x2, y2}})

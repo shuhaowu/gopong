@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
+	"github.com/errnoh/wde.buffer"
 	"github.com/skelterjohn/go.wde"
-	"image/color"
-	"github.com/shuhaowu/gopong/gt2d"
 	"image"
+	"image/draw"
+	"time"
 )
 
 var game Game
-var buffer *gt2d.ScreenBuffer
+var frames, updates uint
 
 // Setup code.
 func setup(window wde.Window, done chan bool) {
@@ -17,17 +18,23 @@ func setup(window wde.Window, done chan bool) {
 	window.LockSize(true)
 	window.Show()
 
+	buffer.Create(window, image.Black)
+
 	width, height := window.Size()
 	game = InitializeGame(width, height)
-	background := image.NewRGBA(image.Rect(0, 0, width, height))
-	buffer = gt2d.NewScreenBuffer(width, height, background)
 
-	screen := window.Screen()
-
-	screen.CopyRGBA(buffer.RGBA, buffer.Rect)
 	window.FlushImage()
 
 	events := window.EventChan()
+
+	go func() {
+		for {
+			time.Sleep(time.Second / 60)
+			game.Update()
+			updates++
+		}
+	}()
+
 	// Events
 	go func() {
 	loop:
@@ -46,13 +53,16 @@ func setup(window wde.Window, done chan bool) {
 	}()
 }
 
-func update(window wde.Window, screen wde.Image) bool {
-	buffer.Reset()
-	game.Update()
-	gt2d.DrawRectangle(buffer, game.Board1.Rect, color.White)
-	gt2d.DrawRectangle(buffer, game.Board2.Rect, color.White)
-	screen.SetRGBA(buffer.RGBA)
-	return true
+func update(window wde.Window, screen wde.Image) {
+	for {
+		r1 := game.Board1.Rect.Rectangle()
+		r2 := game.Board2.Rect.Rectangle()
+
+		buffer.Draw(r1, image.White, image.ZP, draw.Src)
+		buffer.Draw(r2, image.White, image.ZP, draw.Src)
+		buffer.Flip()
+		frames++
+	}
 }
 
 func cleanup() {
