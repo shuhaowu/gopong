@@ -46,8 +46,6 @@ func setup(window wde.Window, done chan bool) {
 	}()
 }
 
-
-
 func update(window wde.Window, screen wde.Image) bool {
 	buffer.Reset()
 	game.Update()

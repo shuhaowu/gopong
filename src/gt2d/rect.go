@@ -48,6 +48,10 @@ func (rectangle *Rectangle) In(o *Rectangle) bool {
 	return o.Min.X <= rectangle.Min.X && rectangle.Max.X <= o.Max.X && o.Min.Y <= rectangle.Min.Y && rectangle.Max.Y <= o.Max.Y
 }
 
+func (rectangle *Rectangle) Collide(s *Rectangle) bool {
+	return (rectangle.Max.Y > s.Min.Y && rectangle.Max.X > s.Min.X) || s.Collide(rectangle)
+}
+
 // Intersect returns the largest rectangle contained by both r and s. If the
 // two rectangles do not overlap then the zero rectangle will be returned.
 func (rectangle Rectangle) Intersect(s *Rectangle) Rectangle {

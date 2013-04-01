@@ -24,7 +24,7 @@ func runGame() {
 			fmt.Println(err)
 			return
 		}
-		window.SetTitle("Go Tank Game") // could probably be extended.
+		window.SetTitle("Go Pong") // could probably be extended.
 		window.SetSize(width, height)
 
 		done := make(chan bool)
@@ -55,7 +55,7 @@ func runGame() {
 			select {
 			case <-done:
 				break loop
-			case <-time.After(time.Duration(20 * time.Millisecond)):
+			case <-time.After(time.Duration(33 * time.Millisecond)):
 				continue
 			}
 		}

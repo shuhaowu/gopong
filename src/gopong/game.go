@@ -42,8 +42,7 @@ func InitializeGame(width, height int) Game {
 	return game
 }
 
-func (game *Game) Update() {
-
+func (game *Game) updateBoards() {
 	var board1velocity, board2velocity gt2d.Vector2D
 
 	if game.keysDown[wde.KeyW]{
@@ -72,6 +71,10 @@ func (game *Game) Update() {
 
 	game.Board1.Move(board1velocity)
 	game.Board2.Move(board2velocity)
+}
+
+func (game *Game) Update() {
+	game.updateBoards()
 }
 
 func (game *Game) OnKeyDown(e wde.KeyDownEvent) {
