@@ -32,9 +32,13 @@ func setup(window wde.Window, done chan bool) {
 	go func() {
 	loop:
 		for ei := range events {
-			switch ei.(type) {
+			switch e := ei.(type) {
 			case wde.CloseEvent:
 				break loop
+			case wde.KeyDownEvent:
+				game.OnKeyDown(e)
+			case wde.KeyUpEvent:
+				game.OnKeyUp(e)
 			}
 		}
 
@@ -47,7 +51,8 @@ func setup(window wde.Window, done chan bool) {
 func update(window wde.Window, screen wde.Image) bool {
 	buffer.Reset()
 	game.Update()
-	gt2d.DrawRectangle(buffer, &(game.Rectangle), color.White)
+	gt2d.DrawRectangle(buffer, game.Board1.Rect, color.White)
+	gt2d.DrawRectangle(buffer, game.Board2.Rect, color.White)
 	screen.SetRGBA(buffer.RGBA)
 	return true
 }

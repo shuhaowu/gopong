@@ -12,8 +12,8 @@ var NullRect Rectangle
 
 // TODO: Add a way to fix the points.
 
-func Rect(x1, y1, x2, y2 int) Rectangle{
-	return Rectangle{Vector2D{x1, y1}, Vector2D{x2, y2}}
+func Rect(x1, y1, x2, y2 int) *Rectangle{
+	return &(Rectangle{Vector2D{x1, y1}, Vector2D{x2, y2}})
 }
 
 func (rectangle *Rectangle) Translate(x, y int) Rectangle {
